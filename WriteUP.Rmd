@@ -1,0 +1,100 @@
+---
+title: "WriteUp-Linear-Model-with-prediction"
+author: "Anthony Falconio"
+date: "Fall 2023"
+output: 
+  html_document:
+    number_sections: true
+    toc: true
+    toc_depth: 5
+---
+
+
+```{r include=FALSE,echo=FALSE}
+require(tidyverse)
+require(tigerstats)
+require(knitr)
+require(foreign)
+```
+
+```{r, eval=TRUE,warning=FALSE}
+url <- "https://onlinestatbook.com/case_studies_rvls/physical_strength/data.txt"
+mydata <- read.csv(file=url,sep="",header=TRUE)
+```
+
+##Introduction
+
+After looking at the data from RVLS on the physical strength and job performance of workers. We want to compare the numerical data called SIMS with the arm, grip, and arm+grip variables to see if there is a correlation in the data between the numerical variables.
+
+$H_0$ There is no correlation between the numerical variables
+
+$H_A$ There is a significant correlation between the numerical variables according to the data
+
+##Methods
+
+```{r}
+glimpse(mydata)
+model1 <- lm(SIMS~ARM,data=mydata)
+model2 <- lm(SIMS~GRIP,data=mydata)
+model3 <- lm(SIMS~ARM+GRIP,data=mydata)
+```
+
+
+## Graphical Results
+
+```{r include = TRUE, echo = FALSE,}
+ggplot(mydata, aes(x = ARM, y= SIMS))+
+  geom_smooth(method=lm)+
+  geom_point()+
+  labs(x = "ARMS", y = "SIMS") +
+  ggtitle("Scatterplot of ARMS vs. SIMS")
+
+ggplot(mydata, aes(x = GRIP, y= SIMS))+
+  geom_smooth(method=lm)+
+  geom_point()+
+  labs(x = "ARMS", y = "SIMS") +
+  ggtitle("Scatterplot of ARMS vs. SIMS")
+
+ggplot(mydata, aes(x = ARM+GRIP, y= SIMS))+
+  geom_smooth(method=lm)+
+  geom_point()+
+  labs(x = "ARMS", y = "SIMS") +
+  ggtitle("Scatterplot of ARMS vs. SIMS")
+```
+
+
+## Numerical Results
+```{r}
+print("ARM")
+cor(SIMS~ARM,data=mydata)
+print("____________")
+print("GRIP")
+cor(SIMS~GRIP,data=mydata)
+print("____________")
+print("ARM+GRIP")
+cor(SIMS~ARM+GRIP,data=mydata)
+```
+
+##Inferential Results
+```{r}
+cat("Model 1")
+summary.lm(model1)
+predict(model1, interval=c("confidence"))
+print("Distance = 0.4365686")
+
+cat("\n\n\n\n","Model 2")
+summary.lm(model2)
+predict(model2, interval=c("confidence"))
+print("Distance = 1.260018.")
+
+cat("\n\n\n\n","Model 3")
+summary.lm(model3)
+predict(model3, interval=c("confidence"))
+print("Distance = 1.5383895")
+```
+
+
+```{r}
+anova(model1,model2,model3)
+```
+
