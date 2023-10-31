@@ -37,8 +37,10 @@ glimpse(mydata)
 model1 <- lm(SIMS~ARM,data=mydata)
 model2 <- lm(SIMS~GRIP,data=mydata)
 model3 <- lm(SIMS~ARM+GRIP,data=mydata)
+sims <- mean(mydata$SIMS)
+target1 <- data.frame(ARM=88,GRIP=94)
 ```
-
+From looking at the environment tab, we can see that we will be comparing numerical variables which will likely include the use of the CandP helper files as this is a num~num problem. We will look at the data using scatter plots and a linear regression model.
 
 ## Graphical Results
 
@@ -52,49 +54,57 @@ ggplot(mydata, aes(x = ARM, y= SIMS))+
 ggplot(mydata, aes(x = GRIP, y= SIMS))+
   geom_smooth(method=lm)+
   geom_point()+
-  labs(x = "ARMS", y = "SIMS") +
-  ggtitle("Scatterplot of ARMS vs. SIMS")
+  labs(x = "GRIP", y = "SIMS") +
+  ggtitle("Scatterplot of GRIP vs. SIMS")
 
 ggplot(mydata, aes(x = ARM+GRIP, y= SIMS))+
   geom_smooth(method=lm)+
   geom_point()+
-  labs(x = "ARMS", y = "SIMS") +
-  ggtitle("Scatterplot of ARMS vs. SIMS")
+  labs(x = "ARMS+GRIP", y = "SIMS") +
+  ggtitle("Scatterplot of ARMS+GRIP vs. SIMS")
 ```
 
+Just from looking at the scatter plots, we can tell that there is positive relationship  with all three variables including ARM, GRIP, and ARM+GRIP, but numerical and inferential results will allow us to analyze the data from a numerical standpoint.
 
 ## Numerical Results
 ```{r}
-print("ARM")
 cor(SIMS~ARM,data=mydata)
-print("____________")
-print("GRIP")
 cor(SIMS~GRIP,data=mydata)
-print("____________")
-print("ARM+GRIP")
 cor(SIMS~ARM+GRIP,data=mydata)
 ```
 
+From looking at the correlation in the three models, we can see that the third model has the strongest correlation of ARM+GRIP, followed by ARM, and then GRIP with the weakest correlation.
+
+
 ##Inferential Results
-```{r}
+```{r, include=TRUE, echo = FALSE}
 cat("Model 1")
 summary.lm(model1)
-predict(model1, interval=c("confidence"))
-print("Distance = 0.4365686")
+predict(model1,target1,interval=c("prediction"))
+cat("4.8 = Difference")
 
-cat("\n\n\n\n","Model 2")
+cat("Model 2")
 summary.lm(model2)
-predict(model2, interval=c("confidence"))
-print("Distance = 1.260018.")
+predict(model2,target1,interval=c("prediction"))
+cat("5.2 = Difference")
 
-cat("\n\n\n\n","Model 3")
+cat("Model 3")
 summary.lm(model3)
-predict(model3, interval=c("confidence"))
-print("Distance = 1.5383895")
+predict(model3,target1,interval=c("prediction"))
+cat("4.6 = Difference")
 ```
 
 
-```{r}
-anova(model1,model2,model3)
+
+```{r, include = TRUE, echo = FALSE}
+cat("Model 1 & 2 ")
+anova(model1,model2)
+cat("\n\n\n Model 2 & 3 ")
+anova(model2,model3)
+cat("\n\n\n Model 1 & 3 ")
+anova(model1,model3)
 ```
+
+
+
 
