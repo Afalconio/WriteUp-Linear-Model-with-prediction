@@ -94,7 +94,7 @@ predict(model3,target1,interval=c("prediction"))
 cat("4.6 = Difference")
 ```
 
-
+By looking at the inferential results of the data and the three models we can see that the model with the lowest residual standard error is model 3 at 1.144 and the model with the adjusted R-squared closest to one is also model 3. From this, we can infer that model 3 has the least amount of difference in the linear model with prediction.
 
 ```{r, include = TRUE, echo = FALSE}
 cat("Model 1 & 2 ")
