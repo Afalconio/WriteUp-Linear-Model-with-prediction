@@ -105,6 +105,8 @@ print("Model 1 & 3 ")
 anova(model1,model3)
 ```
 
+##Discussion and Conclusion
+
 To conclude, the alternate hypothesis of an existing correlation between the numerical data has been proven through the use of a scatter plot to show the positive correlation in the data across the 3 models as well as looking at the residual standard error and the adjusted R-squared to see which model has the strongest correlation to SIMS. Model 3 was also proven to have the lowest p-value using the one way anova test. From the data, we can conclude that the original study shows that job performance is strongly correlated to the arm and grip strength of the workers.
 
 
