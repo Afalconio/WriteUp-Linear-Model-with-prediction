@@ -78,20 +78,20 @@ From looking at the correlation in the three models, we can see that the third m
 
 ##Inferential Results
 ```{r, include=TRUE, echo = FALSE}
-cat("Model 1")
+print("Model 1")
 summary.lm(model1)
 predict(model1,target1,interval=c("prediction"))
-cat("4.8 = Difference")
+print("4.8 = Difference")
 
 cat("Model 2")
 summary.lm(model2)
 predict(model2,target1,interval=c("prediction"))
-cat("5.2 = Difference")
+print("5.2 = Difference")
 
-cat("Model 3")
+print("Model 3")
 summary.lm(model3)
 predict(model3,target1,interval=c("prediction"))
-cat("4.6 = Difference")
+print("4.6 = Difference")
 ```
 
 By looking at the inferential results of the data and the three models we can see that the model with the lowest residual standard error is model 3 at 1.144 and the model with the adjusted R-squared closest to one is also model 3. From this, we can infer that model 3 has the least amount of difference in the linear model with prediction.
